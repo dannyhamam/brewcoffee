@@ -1,0 +1,41 @@
+@import "tailwindcss";
+
+/* Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap');
+
+/* Custom theme colors for warm coffee palette */
+@theme {
+  --color-coffee-dark: #3D2314;
+  --color-coffee-medium: #6F4E37;
+  --color-coffee-light: #A67B5B;
+  --color-cream: #FFF8E7;
+  --color-cream-dark: #F5EBE0;
+  --color-warm-amber: #FFA726;
+  --color-warm-glow: #FFB74D;
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* Steam animation */
+@keyframes steam-rise {
+  0% {
+    opacity: 0;
+    transform: translateY(0) scaleX(1);
+  }
+  15% {
+    opacity: 0.8;
+  }
+  50% {
+    opacity: 0.4;
+    transform: translateY(-20px) scaleX(1.5);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-40px) scaleX(2);
+  }
+}
+
+.steam-wisp {
+  animation: steam-rise 3s ease-out infinite;
+}
+
