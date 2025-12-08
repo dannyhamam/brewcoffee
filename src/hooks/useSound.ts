@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback, useEffect } from 'react';
+import { useState, useRef, useCallback, useEffect } from "react";
 
 export interface UseSoundOptions {
   ambientSrc?: string;
@@ -13,14 +13,14 @@ export interface UseSoundReturn {
   playDing: () => void;
 }
 
-const DEFAULT_AMBIENT = 'https://assets.mixkit.co/sfx/preview/mixkit-coffee-shop-ambience-444.mp3';
-const DEFAULT_DING = 'https://assets.mixkit.co/sfx/preview/mixkit-achievement-bell-600.mp3';
+const DEFAULT_AMBIENT = "/cafe_sounds.mp3";
+const DEFAULT_DING = "/ding.mp3";
 
 export function useSound(options: UseSoundOptions = {}): UseSoundReturn {
   const {
     ambientSrc = DEFAULT_AMBIENT,
     dingSrc = DEFAULT_DING,
-    ambientVolume = 0.3,
+    ambientVolume = 1.0,
     dingVolume = 0.5,
   } = options;
 
@@ -56,7 +56,7 @@ export function useSound(options: UseSoundOptions = {}): UseSoundReturn {
       setIsPlaying(false);
     } else {
       ambientRef.current.play().catch((e) => {
-        console.log('Audio play prevented:', e);
+        console.log("Audio play prevented:", e);
       });
       setIsPlaying(true);
     }
@@ -66,7 +66,7 @@ export function useSound(options: UseSoundOptions = {}): UseSoundReturn {
     if (!dingRef.current) return;
     dingRef.current.currentTime = 0;
     dingRef.current.play().catch((e) => {
-      console.log('Ding play prevented:', e);
+      console.log("Ding play prevented:", e);
     });
   }, []);
 
