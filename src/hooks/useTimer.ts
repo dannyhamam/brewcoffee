@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from "react";
+import { MAX_DURATION_IN_SECONDS } from "../constants";
 
 export interface TimerState {
   remainingSeconds: number;
@@ -12,14 +13,15 @@ export interface TimerActions {
   start: () => void;
   pause: () => void;
   reset: () => void;
-  setDuration: (minutes: number) => void;
+  setDuration: (seconds: number) => void;
+  addTime: (seconds: number) => void;
 }
 
 export type UseTimerReturn = TimerState & TimerActions;
 
-export function useTimer(initialMinutes: number = 25): UseTimerReturn {
-  const [totalSeconds, setTotalSeconds] = useState(initialMinutes * 60);
-  const [remainingSeconds, setRemainingSeconds] = useState(initialMinutes * 60);
+export function useTimer(initialSeconds: number = 3600): UseTimerReturn {
+  const [totalSeconds, setTotalSeconds] = useState(initialSeconds);
+  const [remainingSeconds, setRemainingSeconds] = useState(initialSeconds);
   const [isRunning, setIsRunning] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
   const intervalRef = useRef<number | null>(null);
@@ -78,13 +80,22 @@ export function useTimer(initialMinutes: number = 25): UseTimerReturn {
     setRemainingSeconds(totalSeconds);
   }, [totalSeconds]);
 
-  const setDuration = useCallback((minutes: number) => {
-    const clampedMinutes = Math.max(1, Math.min(240, minutes));
-    const newTotal = clampedMinutes * 60;
-    setTotalSeconds(newTotal);
-    setRemainingSeconds(newTotal);
+  const setDuration = useCallback((seconds: number) => {
+    const clampedSeconds = Math.max(1, Math.min(MAX_DURATION_IN_SECONDS, seconds));
+    setTotalSeconds(clampedSeconds);
+    setRemainingSeconds(clampedSeconds);
     setIsComplete(false);
   }, []);
+
+  const addTime = useCallback((seconds: number) => {
+    if (!isRunning) {
+      setTotalSeconds((prev) => {
+        const newTotal = Math.min(MAX_DURATION_IN_SECONDS, prev + seconds); // Max 99:59:59
+        setRemainingSeconds(newTotal);
+        return newTotal;
+      });
+    }
+  }, [isRunning]);
 
   return {
     remainingSeconds,
@@ -96,5 +107,6 @@ export function useTimer(initialMinutes: number = 25): UseTimerReturn {
     pause,
     reset,
     setDuration,
+    addTime,
   };
 }

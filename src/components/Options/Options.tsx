@@ -1,3 +1,4 @@
+import { useEffect, useState, useCallback } from "react";
 import { Button } from "../shared";
 import { SoundToggle } from "./SoundToggle";
 
@@ -20,40 +21,39 @@ export function Options({
 }: OptionsProps) {
   return (
     <div
-      className="bg-cream/90 backdrop-blur-xl rounded-2xl p-6 shadow-xl 
-                    border border-white/30 w-full max-w-sm space-y-5"
+      className={`fixed bottom-10 left-1/2 -translate-x-1/2 
+        flex items-center gap-4 px-6 py-3 rounded-full 
+        bg-coffee-dark/60 backdrop-blur-md border border-white/10 shadow-2xl z-50 
+        transition-opacity duration-500 ease-in-out`}
     >
-      {/* Timer Buttons */}
-      <div className="flex gap-3 flex-wrap justify-center">
-        <Button
-          onClick={onStart}
-          disabled={isRunning}
-          symbol="▶"
-          displayText="Start"
-          additionalClassNames="bg-gradient-to-br from-coffee-medium to-coffee-dark text-cream"
-        />
+      {/* Play/Pause Button */}
+      <Button
+        onClick={isRunning ? onPause : onStart}
+        displayText=""
+        symbol={isRunning ? "⏸" : "▶"}
+        additionalClassNames={`w-12 h-12 !min-w-0 rounded-full flex items-center justify-center p-0
+          ${
+            isRunning
+              ? "bg-warm-amber text-coffee-dark hover:bg-warm-glow"
+              : "bg-coffee-medium text-cream hover:bg-coffee-light"
+          }`}
+      />
 
-        <Button
-          onClick={onPause}
-          disabled={!isRunning}
-          symbol="⏸"
-          displayText="Pause"
-          additionalClassNames="bg-warm-amber text-coffee-dark hover:bg-warm-glow"
-        />
+      {/* Reset Button */}
+      <Button
+        onClick={onReset}
+        displayText=""
+        symbol="↺"
+        additionalClassNames="w-12 h-12 !min-w-0 rounded-full flex items-center justify-center p-0
+          bg-transparent text-cream/80 border-2 border-cream/20
+          hover:bg-cream/10 hover:text-cream hover:border-cream/40"
+      />
 
-        <Button
-          onClick={onReset}
-          symbol="↺"
-          displayText="Reset"
-          additionalClassNames="bg-transparent text-coffee-medium border-2 border-cream-dark
-                     hover:bg-cream-dark hover:text-coffee-dark"
-        />
-      </div>
+      {/* Divider */}
+      <div className="w-px h-8 bg-white/20 mx-1" />
 
       {/* Sound Toggle */}
-      <div className="flex justify-center">
-        <SoundToggle isPlaying={isSoundPlaying} onToggle={onSoundToggle} />
-      </div>
+      <SoundToggle isPlaying={isSoundPlaying} onToggle={onSoundToggle} />
     </div>
   );
 }

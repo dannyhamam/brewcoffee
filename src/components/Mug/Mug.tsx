@@ -24,7 +24,7 @@ export function Mug({
   const cremaY = fillY + 4;
 
   return (
-    <div className="relative w-72 h-96 md:w-80 md:h-[26rem] flex items-center justify-center">
+    <div className="relative w-80 h-96 md:w-96 md:h-[26rem] flex items-center justify-center">
       {/* Steam */}
       {showSteam && <Steam active={progress > 0.05} intensity={progress} />}
 

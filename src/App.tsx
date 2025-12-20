@@ -3,7 +3,7 @@ import { Mug, Timer, Options } from "./components";
 import { useTimer, useSound } from "./hooks";
 
 function App() {
-  const [duration, setDuration] = useState(1);
+  const [duration, setDuration] = useState(60);
   const timer = useTimer(duration);
   const sound = useSound();
 
@@ -15,14 +15,20 @@ function App() {
   }, [timer.isComplete, sound.playDing]);
 
   // Sync duration input with timer
-  const handleDurationChange = (minutes: number) => {
-    setDuration(minutes);
+  const handleDurationChange = (seconds: number) => {
+    setDuration(seconds);
     if (!timer.isRunning) {
-      timer.setDuration(minutes);
+      timer.setDuration(seconds);
     }
   };
 
-  return (
+  // Handle quick add time buttons
+  const handleAddTime = (seconds: number) => {
+    timer.addTime(seconds);
+    setDuration(timer.totalSeconds);
+  };
+
+  return ( 
     <div
       className="min-h-screen bg-gradient-to-br from-coffee-dark via-coffee-medium to-coffee-dark 
                     flex flex-col items-center justify-center p-6 gap-6"
@@ -42,8 +48,9 @@ function App() {
       <div className="flex flex-col items-center">
         <Mug progress={timer.progress} isComplete={timer.isComplete}>
           <Timer
-            duration={duration}
+            totalSeconds={timer.totalSeconds}
             onDurationChange={handleDurationChange}
+            onAddTime={handleAddTime}
             remainingSeconds={timer.remainingSeconds}
             isRunning={timer.isRunning}
             progress={timer.progress}
