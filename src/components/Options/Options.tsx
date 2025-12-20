@@ -1,4 +1,3 @@
-import { useEffect, useState, useCallback } from "react";
 import { Button } from "../shared";
 import { SoundToggle } from "./SoundToggle";
 

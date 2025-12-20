@@ -138,38 +138,40 @@ export function Timer({
   const displaySeconds = showCountdown ? remainingSeconds : totalSeconds;
 
   return (
-    <div className="flex flex-col items-center gap-3">
+    <div className="">
       {/* Timer Display/Input */}
-      {isEditing && !showCountdown ? (
-        <input
-          ref={inputRef}
-          type="text"
-          value={inputValue || formatTime(totalSeconds, true)}
-          onChange={handleInputChange}
-          onBlur={handleInputBlur}
-          onKeyDown={handleInputKeyDown}
-          placeholder="00:00:00"
-          className={`font-serif text-3xl md:text-4xl font-bold tracking-wider 
+      <div className="p-4">
+        {isEditing && !showCountdown ? (
+          <input
+            ref={inputRef}
+            type="text"
+            value={inputValue || formatTime(totalSeconds, true)}
+            onChange={handleInputChange}
+            onBlur={handleInputBlur}
+            onKeyDown={handleInputKeyDown}
+            placeholder="00:00:00"
+            className={`font-serif text-3xl md:text-4xl font-bold tracking-wider 
                      text-center bg-transparent outline-none w-32 md:w-40
                      border-b-2 ${borderColor} ${textColor}
                      [appearance:textfield]`}
-          style={{ textShadow: "0 2px 8px rgba(0,0,0,0.3)" }}
-        />
-      ) : (
-        <div
-          onClick={handleTimerClick}
-          className={`font-serif text-3xl md:text-4xl font-bold tracking-wider 
+            style={{ textShadow: "0 2px 8px rgba(0,0,0,0.3)" }}
+          />
+        ) : (
+          <div
+            onClick={handleTimerClick}
+            className={`font-serif text-3xl md:text-4xl font-bold tracking-wider 
                       text-center drop-shadow-md ${textColor}
                       ${
                         !showCountdown
                           ? "cursor-pointer hover:opacity-80 transition-opacity"
                           : ""
                       }`}
-          style={{ textShadow: "0 2px 8px rgba(0,0,0,0.3)" }}
-        >
-          {formatTime(displaySeconds, false)}
-        </div>
-      )}
+            style={{ textShadow: "0 2px 8px rgba(0,0,0,0.3)" }}
+          >
+            {formatTime(displaySeconds, false)}
+          </div>
+        )}
+      </div>
 
       {/* Quick Add Buttons */}
       {!isRunning && (

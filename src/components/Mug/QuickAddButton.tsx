@@ -20,10 +20,12 @@ export function QuickAddButton({
       <button
         onClick={() => onAddTime(timeToAdd)}
         disabled={isRunning}
-        className={`px-2 py-1 rounded-lg text-sm font-semibold
+        className={`p-1 rounded-lg text-sm font-semibold
                        ${textColor} ${borderColor} border-2
                        hover:bg-white/10 transition-colors
-                       disabled:opacity-50 disabled:cursor-not-allowed`}
+                       disabled:opacity-50 disabled:cursor-not-allowed
+                       hover:cursor-pointer hover:opacity-80
+                       `}
         style={{ textShadow: "0 1px 3px rgba(0,0,0,0.3)" }}
       >
         +{(timeToAdd / 60.00).toFixed(2)}
