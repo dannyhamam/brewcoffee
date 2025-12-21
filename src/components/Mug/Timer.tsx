@@ -163,7 +163,7 @@ export function Timer({
                       text-center drop-shadow-md ${textColor}
                       ${
                         !showCountdown
-                          ? "cursor-pointer hover:opacity-80 transition-opacity"
+                          ? "cursor-pointer ui-hover-fade"
                           : ""
                       }`}
             style={{ textShadow: "0 2px 8px rgba(0,0,0,0.3)" }}
@@ -177,6 +177,13 @@ export function Timer({
       {!isRunning && (
         <div className="flex items-center gap-2">
           <QuickAddButton
+            timeToAdd={30}
+            onAddTime={onAddTime}
+            isRunning={isRunning}
+            textColor={textColor}
+            borderColor={borderColor}
+          />
+          <QuickAddButton
             timeToAdd={60}
             onAddTime={onAddTime}
             isRunning={isRunning}
@@ -185,13 +192,6 @@ export function Timer({
           />
           <QuickAddButton
             timeToAdd={300}
-            onAddTime={onAddTime}
-            isRunning={isRunning}
-            textColor={textColor}
-            borderColor={borderColor}
-          />
-          <QuickAddButton
-            timeToAdd={600}
             onAddTime={onAddTime}
             isRunning={isRunning}
             textColor={textColor}

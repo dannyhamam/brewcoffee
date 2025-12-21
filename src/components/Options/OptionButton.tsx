@@ -6,7 +6,7 @@ interface ButtonProps {
   additionalClassNames?: string;
 }
 
-export function Button({
+export function OptionButton({
   displayText,
   symbol,
   onClick,
@@ -19,8 +19,7 @@ export function Button({
       disabled={disabled}
       className={`flex-1 min-w-[90px] px-4 py-3 rounded-xl font-semibold shadow-md
         transition-all duration-200 flex items-center justify-center gap-2
-        hover:shadow-lg hover:-translate-y-0.5 cursor:pointer hover:cursor-pointer
-        disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0
+        cursor-pointer ui-hover-lift ui-disabled disabled:hover:translate-y-0 disabled:hover:shadow-md
         ${additionalClassNames}`}
     >
       {symbol && <span>{symbol}</span>} {displayText}

@@ -14,6 +14,9 @@ export function QuickAddButton({
   textColor,
   borderColor
 }: QuickAddButtonProps) {
+
+  const numMinutes = String(Math.floor(timeToAdd / 60)).padStart(2, '0')
+  const numSeconds = String(timeToAdd % 60).padStart(2, '0')
   
   return (
     <div>
@@ -22,13 +25,12 @@ export function QuickAddButton({
         disabled={isRunning}
         className={`p-1 rounded-lg text-sm font-semibold
                        ${textColor} ${borderColor} border-2
-                       hover:bg-white/10 transition-colors
-                       disabled:opacity-50 disabled:cursor-not-allowed
-                       hover:cursor-pointer hover:opacity-80
+                       cursor-pointer ui-hover-surface ui-hover-fade ui-disabled
                        `}
         style={{ textShadow: "0 1px 3px rgba(0,0,0,0.3)" }}
       >
-        +{(timeToAdd / 60.00).toFixed(2)}
+        {/* +{(timeToAdd / 60.00).toFixed(2)} */}
+        {numMinutes}:{numSeconds}
       </button>
     </div>
   );

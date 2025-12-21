@@ -1,4 +1,4 @@
-import { Button } from "../shared";
+import { OptionButton } from "./OptionButton";
 
 interface SoundToggleProps {
   isPlaying: boolean;
@@ -7,7 +7,7 @@ interface SoundToggleProps {
 
 export function SoundToggle({ isPlaying, onToggle }: SoundToggleProps) {
   return (
-    <Button
+    <OptionButton
       onClick={onToggle}
       displayText=""
       symbol={isPlaying ? "🔊" : "🔇"}

@@ -1,4 +1,4 @@
-import { Button } from "../shared";
+import { OptionButton } from "./OptionButton";
 import { SoundToggle } from "./SoundToggle";
 
 interface OptionsProps {
@@ -26,7 +26,7 @@ export function Options({
         transition-opacity duration-500 ease-in-out`}
     >
       {/* Play/Pause Button */}
-      <Button
+      <OptionButton
         onClick={isRunning ? onPause : onStart}
         displayText=""
         symbol={isRunning ? "⏸" : "▶"}
@@ -39,7 +39,7 @@ export function Options({
       />
 
       {/* Reset Button */}
-      <Button
+      <OptionButton
         onClick={onReset}
         displayText=""
         symbol="↺"

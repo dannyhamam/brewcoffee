@@ -16,6 +16,29 @@
   --font-sans: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
+/* Reusable interaction styles (small + composable) */
+@layer utilities {
+  .ui-focus-ring {
+    @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-cream/40;
+  }
+
+  .ui-disabled {
+    @apply disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .ui-hover-fade {
+    @apply transition-opacity hover:opacity-80;
+  }
+
+  .ui-hover-lift {
+    @apply transition-transform transition-shadow duration-200 hover:-translate-y-0.5 hover:shadow-lg;
+  }
+
+  .ui-hover-surface {
+    @apply transition-colors hover:bg-white/10;
+  }
+}
+
 /* Steam animation */
 @keyframes steam-rise {
   0% {
