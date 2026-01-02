@@ -1,9 +1,10 @@
 ---
-alwaysApply: true
+title: "Cursor Code Style Guidelines"
 ---
 
-Code Style Guidelines:
-
-1. Always use Tailwind CSS when styling components.
-2. Prioritize structure over brute force. Focus on creating scalable and understandable code rather than forcing things to work.
-3. User Experience takes priority over everything. All designs should be based on how to make the website look aesthetically clean.
+1. Use Tailwind CSS for all component styling.
+2. Prioritize clear structure and scalable patterns over hacks.
+3. Design for user experience first—keep the interface clean and consistent.
+4. Place reusable styling logic in the shared `index.css`; avoid duplication.
+5. Follow existing color schemes and interaction patterns.
+6. Ensure all buttons use `cursor-pointer` on hover.

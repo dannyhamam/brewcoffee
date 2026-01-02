@@ -1,4 +1,4 @@
-# ☕ FillMyCoffee
+# ☕ Brew Coffee
 
 A cozy Pomodoro timer that fills your coffee cup as you focus.
 
