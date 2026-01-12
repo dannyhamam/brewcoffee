@@ -97,13 +97,12 @@ export function Timer({
     } else {
       value = "00:00:00";
     }
-    console.log(value)
     setInputValue(value);
   };
 
   const handleInputBlur = () => {
     const parsed = parseTime(inputValue);
-    if (parsed !== null && parsed > 0) {
+    if (parsed !== null && parsed >= 0) {
       const clamped = Math.min(MAX_DURATION_IN_SECONDS, parsed);
       onDurationChange(clamped);
     } else {
@@ -114,7 +113,6 @@ export function Timer({
   };
 
   const handleInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    console.log("here")
     if (e.key === "Enter") {
       e.currentTarget.blur();
     } else if (e.key === "Escape") {
@@ -146,7 +144,7 @@ export function Timer({
   return (
     <div className="">
       {/* Timer Display/Input */}
-      <div className="p-4">
+      <div className="w-32 md:w-64 p-4 mx-auto">
         {isEditing && !showCountdown ? (
           <input
             ref={inputRef}
@@ -157,16 +155,14 @@ export function Timer({
             onKeyDown={handleInputKeyDown}
             placeholder="00:00:00"
             className={`font-serif text-3xl md:text-4xl font-bold tracking-wider 
-                     text-center bg-transparent outline-none w-32 md:w-40
-                     border-b-2 ${borderColor} ${textColor}
-                     [appearance:textfield]`}
+                     text-center bg-transparent outline-none w-full ${textColor}`}
             style={{ textShadow: "0 2px 8px rgba(0,0,0,0.3)" }}
           />
         ) : (
           <div
             onClick={handleTimerClick}
             className={`font-serif text-3xl md:text-4xl font-bold tracking-wider 
-                      text-center drop-shadow-md ${textColor}
+                      text-center drop-shadow-md w-full ${textColor}
                       ${
                         !showCountdown
                           ? "cursor-pointer ui-hover-fade"
@@ -181,7 +177,7 @@ export function Timer({
 
       {/* Quick Add Buttons */}
       {!isRunning && (
-        <div className="flex items-center gap-2">
+        <div className="flex justify-center items-center gap-2">
           <QuickAddButton
             timeToAdd={30}
             onAddTime={onAddTime}

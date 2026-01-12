@@ -81,7 +81,7 @@ export function useTimer(initialSeconds: number = 3600): UseTimerReturn {
   }, [totalSeconds]);
 
   const setDuration = useCallback((seconds: number) => {
-    const clampedSeconds = Math.max(1, Math.min(MAX_DURATION_IN_SECONDS, seconds));
+    const clampedSeconds = Math.max(0, Math.min(MAX_DURATION_IN_SECONDS, seconds));
     setTotalSeconds(clampedSeconds);
     setRemainingSeconds(clampedSeconds);
     setIsComplete(false);
