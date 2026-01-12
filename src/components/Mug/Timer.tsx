@@ -81,11 +81,15 @@ export function Timer({
   }, [isEditing]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+
     let value = e.target.value;
+
     // Remove all non-digit characters
     const digits = value.replace(/\D/g, "");
-    // Limit to 6 digits (HHMMSS)
-    const limited = digits.slice(0, 6);
+
+    // If we have more than 6 digits, take only the last 6 (shift left behavior)
+    const limited = digits.length > 6 ? digits.slice(-6) : digits;
+    
     // Format as HH:MM:SS
     if (limited.length > 0) {
       const padded = limited.padStart(6, "0");
@@ -93,6 +97,7 @@ export function Timer({
     } else {
       value = "00:00:00";
     }
+    console.log(value)
     setInputValue(value);
   };
 
@@ -109,6 +114,7 @@ export function Timer({
   };
 
   const handleInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    console.log("here")
     if (e.key === "Enter") {
       e.currentTarget.blur();
     } else if (e.key === "Escape") {
@@ -145,7 +151,7 @@ export function Timer({
           <input
             ref={inputRef}
             type="text"
-            value={inputValue || formatTime(totalSeconds, true)}
+            value={inputValue}
             onChange={handleInputChange}
             onBlur={handleInputBlur}
             onKeyDown={handleInputKeyDown}
