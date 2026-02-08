@@ -9,7 +9,9 @@ export interface UseSoundOptions {
 
 export interface UseSoundReturn {
   isPlaying: boolean;
+  volume: number;
   toggle: () => void;
+  setVolume: (v: number) => void;
   playDing: () => void;
 }
 
@@ -25,6 +27,7 @@ export function useSound(options: UseSoundOptions = {}): UseSoundReturn {
   } = options;
 
   const [isPlaying, setIsPlaying] = useState(false);
+  const [volume, setVolumeState] = useState(ambientVolume);
   const ambientRef = useRef<HTMLAudioElement | null>(null);
   const dingRef = useRef<HTMLAudioElement | null>(null);
 
@@ -32,7 +35,7 @@ export function useSound(options: UseSoundOptions = {}): UseSoundReturn {
   useEffect(() => {
     ambientRef.current = new Audio(ambientSrc);
     ambientRef.current.loop = true;
-    ambientRef.current.volume = ambientVolume;
+    ambientRef.current.volume = volume;
 
     dingRef.current = new Audio(dingSrc);
     dingRef.current.volume = dingVolume;
@@ -46,7 +49,15 @@ export function useSound(options: UseSoundOptions = {}): UseSoundReturn {
         dingRef.current = null;
       }
     };
-  }, [ambientSrc, dingSrc, ambientVolume, dingVolume]);
+  }, [ambientSrc, dingSrc, dingVolume]);
+
+  const setVolume = useCallback((v: number) => {
+    const clamped = Math.max(0, Math.min(1, v));
+    setVolumeState(clamped);
+    if (ambientRef.current) {
+      ambientRef.current.volume = clamped;
+    }
+  }, []);
 
   const toggle = useCallback(() => {
     if (!ambientRef.current) return;
@@ -72,7 +83,9 @@ export function useSound(options: UseSoundOptions = {}): UseSoundReturn {
 
   return {
     isPlaying,
+    volume,
     toggle,
+    setVolume,
     playDing,
   };
 }
