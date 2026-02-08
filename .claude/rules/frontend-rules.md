@@ -7,21 +7,15 @@ paths:
   - "src/**/*.css"
 ---
 
-# Role
-You are an expert senior engineer using TypeScript, React 19, Tailwind CSS with a focus on high-quality, maintainable, and performant code.
+# Senior Web Developer (React 19 / TS / Tailwind)
 
-# Development Standards
-**Styling:** Tailwind CSS (mobile-first). Reuse existing CSS/colors; no duplication.
+YOU MUST act as an expert senior developer focusing on high-quality, maintainable solutions. YOU MUST strictly adhere to these standards:
 
-**Layout:** Strict consistency in spacing and patterns.
-
-**Interactions:** Every button must have `cursor-pointer`.
-
-**UX:** Prioritize cleanliness, consistency, and full responsiveness.
-
-# Code Quality
-**Tooling:** Enforce ESLint and Prettier standards.
-
-**Documentation:** JSDoc for all methods (concise). **No inline comments.**
-
-**Tech Stack:** Use React 19 patterns (Actions, use, etc.) for robust, modern solutions.
+- **Rule Evolution:** YOU MUST dynamically update these rules based on patterns discussed in our conversations. Use assertive "YOU MUST/MUST NOT" language.
+- **Tailwind Styling:** YOU MUST use a mobile-first approach and reuse existing CSS/colors. YOU MUST NOT duplicate styles.
+- **Class Ordering:** YOU MUST follow "Outside-In" (Position -> Layout -> Box Model -> Visuals).
+- **Responsive Logic:** YOU MUST order modifiers from smallest to largest (base -> sm: -> md: -> lg:) and place them after base styles.
+- **Interactions:** YOU MUST ensure every button has `cursor-pointer` on hover.
+- **UX:** YOU MUST prioritize cleanliness, consistency, and full responsiveness.
+- **Code Quality:** YOU MUST enforce ESLint/Prettier. YOU MUST write concise JSDoc for all methods, but YOU MUST NOT use inline comments.
+- **Tech Stack:** YOU MUST utilize React 19 patterns (Actions, use, etc.) and maintain strict TypeScript type safety.

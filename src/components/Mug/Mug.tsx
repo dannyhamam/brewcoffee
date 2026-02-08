@@ -24,7 +24,7 @@ export function Mug({
   const cremaY = fillY + 4;
 
   return (
-    <div className="relative w-80 h-96 md:w-96 md:h-[26rem] flex items-center justify-center">
+    <div className="relative w-[80vw] sm:w-[65vw] md:w-[50vw] lg:w-[40vw] max-w-lg aspect-15/16 flex items-center justify-center">
       {/* Steam */}
       {showSteam && <Steam active={progress > 0.05} intensity={progress} />}
 
@@ -32,7 +32,7 @@ export function Mug({
       {isComplete && (
         <div
           className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 
-                     w-64 h-64 rounded-full pointer-events-none animate-pulse"
+                     w-3/4 h-3/4 rounded-full pointer-events-none animate-pulse"
           style={{
             background:
               "radial-gradient(circle, rgba(255,183,77,0.5) 0%, transparent 70%)",
@@ -42,17 +42,26 @@ export function Mug({
 
       {/* Coffee Cup SVG */}
       <svg
-        className={`w-full h-full drop-shadow-2xl transition-transform duration-300`}
-        viewBox="0 0 200 240"
+        className="w-full h-full drop-shadow-2xl transition-transform duration-300"
+        viewBox="-20 0 225 240"
         xmlns="http://www.w3.org/2000/svg"
       >
-        {/* Definitions */}
         <defs>
           <linearGradient id="cupGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#E8DDD4" />
-            <stop offset="30%" stopColor="#FFF8F0" />
-            <stop offset="70%" stopColor="#F5EBE0" />
+            <stop offset="0%" stopColor="#D4C4B5" />
+            <stop offset="18%" stopColor="#EDE4DA" />
+            <stop offset="42%" stopColor="#FFF8F0" />
+            <stop offset="58%" stopColor="#FFF8F0" />
+            <stop offset="82%" stopColor="#EDE4DA" />
             <stop offset="100%" stopColor="#D4C4B5" />
+          </linearGradient>
+          <linearGradient id="highlightGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="rgba(255,255,255,0)" />
+            <stop offset="30%" stopColor="rgba(255,255,255,0)" />
+            <stop offset="45%" stopColor="rgba(255,255,255,0.12)" />
+            <stop offset="55%" stopColor="rgba(255,255,255,0.12)" />
+            <stop offset="70%" stopColor="rgba(255,255,255,0)" />
+            <stop offset="100%" stopColor="rgba(255,255,255,0)" />
           </linearGradient>
           <linearGradient id="coffeeGradient" x1="0%" y1="0%" x2="0%" y2="100%">
             <stop offset="0%" stopColor="#8B6914" />
@@ -66,32 +75,34 @@ export function Mug({
           <clipPath id="cupClip">
             <path d="M30 60 Q25 200 50 220 L130 220 Q155 200 150 60 Z" />
           </clipPath>
+          <filter id="shadowBlur">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="4" />
+          </filter>
         </defs>
 
         {/* Cup Shadow */}
-        <ellipse cx="90" cy="230" rx="70" ry="8" fill="rgba(0,0,0,0.2)" />
+        <ellipse
+          cx="90"
+          cy="232"
+          rx="78"
+          ry="10"
+          fill="rgba(0,0,0,0.18)"
+          filter="url(#shadowBlur)"
+        />
 
         {/* Cup Body */}
         <path
           d="M30 60 Q25 200 50 220 L130 220 Q155 200 150 60 Z"
           fill="url(#cupGradient)"
           stroke="#C4B5A6"
-          strokeWidth="2"
+          strokeWidth="1.5"
+        />
+        <path
+          d="M30 60 Q25 200 50 220 L130 220 Q155 200 150 60 Z"
+          fill="url(#highlightGradient)"
         />
 
-        {/* Cup Rim */}
-        <ellipse
-          cx="90"
-          cy="60"
-          rx="62"
-          ry="12"
-          fill="url(#cupGradient)"
-          stroke="#C4B5A6"
-          strokeWidth="2"
-        />
-        <ellipse cx="90" cy="60" rx="55" ry="9" fill="#FFF8F0" />
-
-        {/* Coffee Liquid (animated via props) */}
+        {/* Coffee Fill */}
         <g clipPath="url(#cupClip)">
           <rect
             x="25"
@@ -101,7 +112,6 @@ export function Mug({
             fill="url(#coffeeGradient)"
             className="transition-all duration-500 ease-out"
           />
-          {/* Crema layer */}
           {progress > 0.05 && (
             <ellipse
               cx="90"
@@ -114,25 +124,45 @@ export function Mug({
           )}
         </g>
 
+        {/* Cup Rim */}
+        <ellipse
+          cx="90"
+          cy="60"
+          rx="62"
+          ry="12"
+          fill="url(#cupGradient)"
+          stroke="#C4B5A6"
+          strokeWidth="1.5"
+        />
+        <ellipse
+          cx="90"
+          cy="60"
+          rx="55"
+          ry="9"
+          fill="#F5EDE3"
+          stroke="#E0D5C8"
+          strokeWidth="0.5"
+        />
+
         {/* Cup Handle */}
         <path
-          d="M150 90 Q190 90 190 140 Q190 180 150 180"
+          d="M150 90 Q192 90 192 140 Q192 180 150 180"
           fill="none"
           stroke="url(#cupGradient)"
           strokeWidth="18"
           strokeLinecap="round"
         />
         <path
-          d="M150 100 Q180 100 180 140 Q180 170 150 170"
+          d="M150 100 Q182 100 182 140 Q182 170 150 170"
           fill="none"
           stroke="#C4B5A6"
-          strokeWidth="2"
+          strokeWidth="1.5"
         />
       </svg>
 
       {/* Timer overlay inside the cup */}
       {children && (
-        <div className="absolute inset-0 flex items-center justify-center pr-8 pt-4">
+        <div className="absolute inset-0 flex items-center justify-center pt-[2%]">
           {children}
         </div>
       )}

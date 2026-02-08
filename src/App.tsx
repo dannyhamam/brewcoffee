@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Modal, Mug, Options, Timer } from "./components";
+import { QuickAddButton } from "./components/Mug/QuickAddButton";
 import { useTimer, useSound } from "./hooks";
 
 const ONBOARDING_KEY = "brewcoffee:onboardingSeen";
@@ -46,8 +47,8 @@ function App() {
 
   return ( 
     <div
-      className="min-h-screen bg-gradient-to-br from-coffee-dark via-coffee-medium to-coffee-dark 
-                    flex flex-col items-center justify-center p-6 gap-6 relative"
+      className="min-h-screen bg-gradient-to-br from-coffee-dark via-coffee-medium to-coffee-dark
+                    flex flex-col items-center justify-center p-4 relative"
     >
       {/* Help */}
       <button
@@ -100,18 +101,47 @@ function App() {
         </div>
       </Modal>
 
-      {/* Coffee Cup with Timer inside */}
-      <div className="flex flex-col items-center">
+      {/* Main Content */}
+      <div className="flex flex-col items-center gap-5 pb-28">
         <Mug progress={timer.progress} isComplete={timer.isComplete}>
           <Timer
             totalSeconds={timer.totalSeconds}
             onDurationChange={handleDurationChange}
-            onAddTime={handleAddTime}
             remainingSeconds={timer.remainingSeconds}
             isRunning={timer.isRunning}
             progress={timer.progress}
           />
         </Mug>
+
+        {/* Quick Add Buttons */}
+        {!timer.isRunning && (
+          <div className="flex items-center gap-3">
+            <QuickAddButton
+              timeToAdd={30}
+              onAddTime={handleAddTime}
+              isRunning={timer.isRunning}
+            />
+            <QuickAddButton
+              timeToAdd={60}
+              onAddTime={handleAddTime}
+              isRunning={timer.isRunning}
+            />
+            <QuickAddButton
+              timeToAdd={300}
+              onAddTime={handleAddTime}
+              isRunning={timer.isRunning}
+            />
+          </div>
+        )}
+
+        {/* Status Message */}
+        <p className="text-cream/50 text-sm font-sans tracking-wide">
+          {timer.isComplete
+            ? "Your coffee is ready! Great focus session."
+            : timer.isRunning
+            ? "Brewing in progress... Stay focused."
+            : "Click the timer to set your duration"}
+        </p>
       </div>
 
       {/* Controls */}
@@ -123,18 +153,6 @@ function App() {
         isSoundPlaying={sound.isPlaying}
         onSoundToggle={sound.toggle}
       />
-
-      {/* Status Message */}
-      <div
-        className="text-cream/80 text-center px-6 py-3 bg-coffee-dark/30 rounded-full
-                      backdrop-blur-sm"
-      >
-        {timer.isComplete
-          ? "🎉 Your coffee is ready! Great focus session!"
-          : timer.isRunning
-          ? "☕ Brewing in progress... Stay focused!"
-          : "Set your duration and start brewing ☕"}
-      </div>
     </div>
   );
 }

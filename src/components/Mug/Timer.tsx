@@ -1,11 +1,9 @@
 import { useState, useEffect, useRef } from "react";
 import { COLOR_SWITCH_PERCENTAGE, MAX_DURATION_IN_SECONDS } from "../../constants";
-import { QuickAddButton } from "./QuickAddButton";
 
 interface TimerProps {
   totalSeconds: number;
   onDurationChange: (seconds: number) => void;
-  onAddTime: (seconds: number) => void;
   remainingSeconds: number;
   isRunning: boolean;
   progress?: number;
@@ -21,7 +19,6 @@ interface TimerProps {
 export function Timer({
   totalSeconds,
   onDurationChange,
-  onAddTime,
   remainingSeconds,
   isRunning,
   progress = 0,
@@ -127,13 +124,8 @@ export function Timer({
     }
   };
 
-  // Dynamic color: brown on empty mug, cream on filled mug (switch at configured percentage)
   const textColor =
     progress >= COLOR_SWITCH_PERCENTAGE ? "text-cream" : "text-coffee-medium";
-  const borderColor =
-    progress >= COLOR_SWITCH_PERCENTAGE
-      ? "border-cream/50"
-      : "border-coffee-medium/50";
 
   // Show countdown if running OR if mug has coffee
   const showCountdown = isRunning || progress > 0;
@@ -142,63 +134,29 @@ export function Timer({
   const displaySeconds = showCountdown ? remainingSeconds : totalSeconds;
 
   return (
-    <div className="">
-      {/* Timer Display/Input */}
-      <div className="w-32 md:w-64 p-4 mx-auto">
-        {isEditing && !showCountdown ? (
-          <input
-            ref={inputRef}
-            type="text"
-            value={inputValue}
-            onChange={handleInputChange}
-            onBlur={handleInputBlur}
-            onKeyDown={handleInputKeyDown}
-            placeholder="00:00:00"
-            className={`font-serif text-3xl md:text-4xl font-bold tracking-wider 
+    <div className="max-w-[55%] mx-auto">
+      {isEditing && !showCountdown ? (
+        <input
+          ref={inputRef}
+          type="text"
+          value={inputValue}
+          onChange={handleInputChange}
+          onBlur={handleInputBlur}
+          onKeyDown={handleInputKeyDown}
+          placeholder="00:00:00"
+          className={`font-serif text-3xl md:text-4xl lg:text-5xl font-bold tracking-wide
                      text-center bg-transparent outline-none w-full ${textColor}`}
-            style={{ textShadow: "0 2px 8px rgba(0,0,0,0.3)" }}
-          />
-        ) : (
-          <div
-            onClick={handleTimerClick}
-            className={`font-serif text-3xl md:text-4xl font-bold tracking-wider 
-                      text-center drop-shadow-md w-full ${textColor}
-                      ${
-                        !showCountdown
-                          ? "cursor-pointer ui-hover-fade"
-                          : ""
-                      }`}
-            style={{ textShadow: "0 2px 8px rgba(0,0,0,0.3)" }}
-          >
-            {formatTime(displaySeconds, false)}
-          </div>
-        )}
-      </div>
-
-      {/* Quick Add Buttons */}
-      {!isRunning && (
-        <div className="flex justify-center items-center gap-2">
-          <QuickAddButton
-            timeToAdd={30}
-            onAddTime={onAddTime}
-            isRunning={isRunning}
-            textColor={textColor}
-            borderColor={borderColor}
-          />
-          <QuickAddButton
-            timeToAdd={60}
-            onAddTime={onAddTime}
-            isRunning={isRunning}
-            textColor={textColor}
-            borderColor={borderColor}
-          />
-          <QuickAddButton
-            timeToAdd={300}
-            onAddTime={onAddTime}
-            isRunning={isRunning}
-            textColor={textColor}
-            borderColor={borderColor}
-          />
+          style={{ textShadow: "0 2px 8px rgba(0,0,0,0.3)" }}
+        />
+      ) : (
+        <div
+          onClick={handleTimerClick}
+          className={`font-serif text-3xl md:text-4xl lg:text-5xl font-bold tracking-wide
+                      text-center drop-shadow-md ${textColor}
+                      ${!showCountdown ? "cursor-text hover:opacity-80 transition-opacity" : ""}`}
+          style={{ textShadow: "0 2px 8px rgba(0,0,0,0.3)" }}
+        >
+          {formatTime(displaySeconds, false)}
         </div>
       )}
     </div>
