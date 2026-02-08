@@ -20,10 +20,12 @@ export function Options({
 }: OptionsProps) {
   return (
     <div
-      className={`fixed bottom-10 left-1/2 -translate-x-1/2 
-        flex items-center gap-4 px-6 py-3 rounded-full 
-        bg-coffee-dark/60 backdrop-blur-md border border-white/10 shadow-2xl z-50 
-        transition-opacity duration-500 ease-in-out`}
+      className={`fixed bottom-10 left-1/2 -translate-x-1/2
+        flex items-center gap-4 px-6 py-3 rounded-full
+        bg-coffee-dark/60 backdrop-blur-md border border-white/10 shadow-2xl z-50
+        transition-opacity duration-500 ease-in-out
+        animate-fade-in-up`}
+      style={{ animationDelay: "600ms" }}
     >
       {/* Play/Pause Button */}
       <OptionButton

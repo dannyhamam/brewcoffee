@@ -57,7 +57,9 @@ function App() {
         className="absolute top-6 right-6 h-11 w-11 rounded-full border border-cream/15
                    bg-coffee-dark/25 text-cream/90 shadow-lg backdrop-blur
                    hover:bg-coffee-dark/35 hover:text-cream transition-colors
-                   ui-hover-fade ui-focus-ring ui-hover-surface cursor-pointer"
+                   ui-hover-fade ui-focus-ring ui-hover-surface cursor-pointer
+                   animate-fade-in-up"
+        style={{ animationDelay: "400ms" }}
         aria-label="About Brew Coffee"
       >
         ?
@@ -103,6 +105,7 @@ function App() {
 
       {/* Main Content */}
       <div className="flex flex-col items-center gap-5 pb-28">
+        <div className="animate-fade-in-scale">
         <Mug progress={timer.progress} isComplete={timer.isComplete}>
           <Timer
             totalSeconds={timer.totalSeconds}
@@ -112,10 +115,11 @@ function App() {
             progress={timer.progress}
           />
         </Mug>
+        </div>
 
         {/* Quick Add Buttons */}
         {!timer.isRunning && (
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 animate-fade-in-up" style={{ animationDelay: "400ms" }}>
             <QuickAddButton
               timeToAdd={30}
               onAddTime={handleAddTime}
@@ -135,7 +139,7 @@ function App() {
         )}
 
         {/* Status Message */}
-        <p className="text-cream/50 text-sm font-sans tracking-wide">
+        <p className="text-cream/50 text-sm font-sans tracking-wide animate-fade-in-up" style={{ animationDelay: "500ms" }}>
           {timer.isComplete
             ? "Your coffee is ready! Great focus session."
             : timer.isRunning

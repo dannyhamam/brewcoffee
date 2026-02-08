@@ -14,6 +14,8 @@
   --color-warm-glow: #ffb74d;
   --font-serif: "Playfair Display", Georgia, serif;
   --font-sans: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  --animate-fade-in-up: fade-in-up 600ms ease-out both;
+  --animate-fade-in-scale: fade-in-scale 600ms ease-out both;
 }
 
 /* Reusable interaction styles (small + composable) */
@@ -60,4 +62,27 @@
 
 .steam-wisp {
   animation: steam-rise 3s ease-out infinite;
+}
+
+/* Landing entrance animations */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in-scale {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }

@@ -134,7 +134,7 @@ export function Timer({
   const displaySeconds = showCountdown ? remainingSeconds : totalSeconds;
 
   return (
-    <div className="max-w-[55%] mx-auto">
+    <div className="max-w-[55%] mx-auto animate-fade-in-up" style={{ animationDelay: "200ms" }}>
       {isEditing && !showCountdown ? (
         <input
           ref={inputRef}
