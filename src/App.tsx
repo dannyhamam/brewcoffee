@@ -56,55 +56,36 @@ function App() {
             className="absolute -top-1 -right-2 z-10 flex items-center gap-1 animate-fade-in-up"
             style={{ animationDelay: "400ms" }}
           >
-            {/* Sketch arrow hint */}
-            <div className="animate-fade-out-hint flex items-center gap-1 mr-1">
-              <span className="font-sans text-[10px] text-cream/40 italic whitespace-nowrap">
-                full screen
-              </span>
-              <svg
-                width="20"
-                height="16"
-                viewBox="0 0 20 16"
-                fill="none"
-                className="text-cream/40"
-              >
-                <path
-                  d="M2 12 C6 12, 10 10, 14 4"
-                  stroke="currentColor"
-                  strokeWidth="1.2"
-                  strokeLinecap="round"
-                  fill="none"
-                />
-                <path
-                  d="M11 2 L14.5 4 L11 6"
-                  stroke="currentColor"
-                  strokeWidth="1.2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  fill="none"
-                />
-              </svg>
-            </div>
-
             {/* Fullscreen toggle */}
-            <button
-              type="button"
-              onClick={fullscreen.toggle}
-              className="h-8 w-8 rounded-full flex items-center justify-center
-                         text-cream/60 hover:text-cream hover:bg-white/10
-                         transition-colors cursor-pointer ui-focus-ring"
-              aria-label={fullscreen.isFullscreen ? "Exit full screen" : "Enter full screen"}
-            >
-              {fullscreen.isFullscreen ? (
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
-                  <path d="M5 1v4H1M11 1v4h4M5 15v-4H1M11 15v-4h4" />
-                </svg>
-              ) : (
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
-                  <path d="M1 5V1h4M15 5V1h-4M1 11v4h4M15 11v4h-4" />
-                </svg>
-              )}
-            </button>
+            <div className="relative group">
+              <button
+                type="button"
+                onClick={fullscreen.toggle}
+                className="h-8 w-8 rounded-full flex items-center justify-center
+                           text-cream/60 hover:text-cream hover:bg-white/10
+                           transition-colors cursor-pointer ui-focus-ring animate-pulse-ring"
+                style={{ animationDelay: "1s" }}
+                aria-label={fullscreen.isFullscreen ? "Exit full screen" : "Enter full screen"}
+              >
+                {fullscreen.isFullscreen ? (
+                  <svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
+                    <path d="M5 1v4H1M11 1v4h4M5 15v-4H1M11 15v-4h4" />
+                  </svg>
+                ) : (
+                  <svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
+                    <path d="M1 5V1h4M15 5V1h-4M1 11v4h4M15 11v4h-4" />
+                  </svg>
+                )}
+              </button>
+              <span
+                className="absolute -top-7 left-1/2 -translate-x-1/2 px-2 py-0.5 rounded
+                           bg-black/70 text-cream/80 text-[10px] font-sans whitespace-nowrap
+                           opacity-0 group-hover:opacity-100 transition-opacity duration-150
+                           pointer-events-none"
+              >
+                {fullscreen.isFullscreen ? "Exit full screen" : "Full screen"}
+              </span>
+            </div>
 
             {/* Sound toggle + volume slider */}
             <div className="relative group">
@@ -113,12 +94,13 @@ function App() {
                 onClick={sound.toggle}
                 className="relative h-8 w-8 rounded-full flex items-center justify-center
                            text-cream/60 hover:text-cream hover:bg-white/10
-                           transition-colors cursor-pointer ui-focus-ring"
+                           transition-colors cursor-pointer ui-focus-ring animate-pulse-ring"
+                style={{ animationDelay: "1.4s" }}
                 aria-label={sound.isPlaying ? "Mute cafe sounds" : "Play cafe sounds"}
               >
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
                   <path d="M8 1.5L4 5H1v6h3l4 3.5V1.5z" />
-                  {sound.isPlaying && (
+                  {sound.isPlaying && sound.volume > 0 && (
                     <>
                       <path d="M11 5.5c.6.7 1 1.6 1 2.5s-.4 1.8-1 2.5" />
                       <path d="M13 3.5C14.2 4.8 15 6.8 15 8s-.8 3.2-2 4.5" />
@@ -126,7 +108,7 @@ function App() {
                   )}
                 </svg>
                 {/* Red mute line */}
-                {!sound.isPlaying && (
+                {(!sound.isPlaying || sound.volume === 0) && (
                   <svg
                     width="16"
                     height="16"
@@ -137,10 +119,18 @@ function App() {
                   </svg>
                 )}
               </button>
+              <span
+                className="absolute -top-7 left-1/2 -translate-x-1/2 px-2 py-0.5 rounded
+                           bg-black/70 text-cream/80 text-[10px] font-sans whitespace-nowrap
+                           opacity-0 group-hover:opacity-100 transition-opacity duration-150
+                           pointer-events-none"
+              >
+                {sound.isPlaying && sound.volume > 0 ? "Mute" : "Cafe sounds"}
+              </span>
 
-              {/* Volume slider — appears on hover, no gap */}
+              {/* Volume slider — appears on hover */}
               <div
-                className="absolute top-full left-1/2 -translate-x-1/2 py-3 px-2
+                className="absolute top-full left-1/2 -translate-x-1/2 pt-5 py-3 px-2
                            opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto
                            transition-opacity duration-200"
               >

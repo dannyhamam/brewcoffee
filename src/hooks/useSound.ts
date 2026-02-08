@@ -30,6 +30,7 @@ export function useSound(options: UseSoundOptions = {}): UseSoundReturn {
   const [volume, setVolumeState] = useState(ambientVolume);
   const ambientRef = useRef<HTMLAudioElement | null>(null);
   const dingRef = useRef<HTMLAudioElement | null>(null);
+  const prevVolumeRef = useRef(ambientVolume);
 
   // Initialize audio elements
   useEffect(() => {
@@ -51,27 +52,43 @@ export function useSound(options: UseSoundOptions = {}): UseSoundReturn {
     };
   }, [ambientSrc, dingSrc, dingVolume]);
 
+  /** Update volume and auto-pause/resume when slider hits 0 or leaves 0. */
   const setVolume = useCallback((v: number) => {
     const clamped = Math.max(0, Math.min(1, v));
     setVolumeState(clamped);
     if (ambientRef.current) {
       ambientRef.current.volume = clamped;
     }
-  }, []);
 
+    if (clamped === 0 && isPlaying) {
+      ambientRef.current?.pause();
+      setIsPlaying(false);
+    } else if (clamped > 0 && !isPlaying) {
+      ambientRef.current?.play().catch(() => {});
+      setIsPlaying(true);
+    }
+  }, [isPlaying]);
+
+  /** Toggle mute: saves/restores previous volume. */
   const toggle = useCallback(() => {
     if (!ambientRef.current) return;
 
     if (isPlaying) {
+      prevVolumeRef.current = volume || prevVolumeRef.current;
       ambientRef.current.pause();
       setIsPlaying(false);
+      setVolumeState(0);
+      ambientRef.current.volume = 0;
     } else {
+      const restored = prevVolumeRef.current > 0 ? prevVolumeRef.current : 0.5;
+      setVolumeState(restored);
+      ambientRef.current.volume = restored;
       ambientRef.current.play().catch((e) => {
         console.log("Audio play prevented:", e);
       });
       setIsPlaying(true);
     }
-  }, [isPlaying]);
+  }, [isPlaying, volume]);
 
   const playDing = useCallback(() => {
     if (!dingRef.current) return;
