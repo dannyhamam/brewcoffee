@@ -47,18 +47,6 @@ export function Mug({
       {/* Steam */}
       {showSteam && <Steam active={progress > 0.05} intensity={progress} />}
 
-      {/* Completion Glow */}
-      {isComplete && (
-        <div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
-                     w-3/4 h-3/4 rounded-full pointer-events-none animate-pulse"
-          style={{
-            background:
-              "radial-gradient(circle, rgba(255,183,77,0.5) 0%, transparent 70%)",
-          }}
-        />
-      )}
-
       {/* Coffee Cup SVG */}
       <svg
         className="w-full h-full drop-shadow-2xl transition-transform duration-300"
