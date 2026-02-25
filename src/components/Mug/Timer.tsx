@@ -134,7 +134,10 @@ export function Timer({
   const displaySeconds = showCountdown ? remainingSeconds : totalSeconds;
 
   return (
-    <div className="max-w-[55%] mx-auto animate-fade-in-up" style={{ animationDelay: "200ms" }}>
+    <div
+      className="max-w-[95%] mx-auto animate-fade-in-up"
+      style={{ animationDelay: "200ms" }}
+    >
       {isEditing && !showCountdown ? (
         <input
           ref={inputRef}
@@ -144,7 +147,7 @@ export function Timer({
           onBlur={handleInputBlur}
           onKeyDown={handleInputKeyDown}
           placeholder="00:00:00"
-          className={`font-serif text-3xl md:text-4xl lg:text-5xl font-bold tracking-wide
+          className={`font-serif text-2xl md:text-3xl lg:text-4xl font-bold tracking-wide
                      text-center bg-transparent outline-none w-full ${textColor}`}
           style={{ textShadow: "0 2px 8px rgba(0,0,0,0.3)" }}
         />

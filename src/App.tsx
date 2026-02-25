@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
-import { Mug, Timer } from "./components";
+import { Timer } from "./components";
 import { QuickAddButton } from "./components/Mug/QuickAddButton";
+import { CoffeeCarousel } from "./components/CoffeeCarousel";
+import { COFFEE_TYPES } from "./coffeeTypes";
 import { useTimer, useSound, useFullscreen } from "./hooks";
 
 function App() {
-  const [duration, setDuration] = useState(60);
+  const [coffeeIndex, setCoffeeIndex] = useState(0);
+  const [duration, setDuration] = useState(COFFEE_TYPES[0].defaultSeconds);
   const timer = useTimer(duration);
   const sound = useSound();
   const fullscreen = useFullscreen();
@@ -15,6 +18,14 @@ function App() {
       sound.playDing();
     }
   }, [timer.isComplete, sound.playDing]);
+
+  // When coffee type changes, update the default duration
+  const handleCoffeeChange = (index: number) => {
+    setCoffeeIndex(index);
+    const newDefault = COFFEE_TYPES[index].defaultSeconds;
+    setDuration(newDefault);
+    timer.setDuration(newDefault);
+  };
 
   // Sync duration input with timer
   const handleDurationChange = (seconds: number) => {
@@ -29,6 +40,9 @@ function App() {
     timer.addTime(seconds);
     setDuration(timer.totalSeconds);
   };
+
+  const currentCoffee = COFFEE_TYPES[coffeeIndex];
+  const carouselDisabled = timer.isRunning || timer.isComplete;
 
   return (
     <div
@@ -49,7 +63,7 @@ function App() {
 
       {/* Main Content */}
       <div className="flex flex-col items-center gap-5">
-        {/* Mug area with utility icons */}
+        {/* Carousel area with utility icons */}
         <div className="relative animate-fade-in-scale">
           {/* Utility icons — top-right of mug */}
           <div
@@ -154,15 +168,23 @@ function App() {
             </div>
           </div>
 
-          <Mug progress={timer.progress} isComplete={timer.isComplete}>
-            <Timer
-              totalSeconds={timer.totalSeconds}
-              onDurationChange={handleDurationChange}
-              remainingSeconds={timer.remainingSeconds}
-              isRunning={timer.isRunning}
-              progress={timer.progress}
-            />
-          </Mug>
+          <CoffeeCarousel
+            currentIndex={coffeeIndex}
+            onIndexChange={handleCoffeeChange}
+            disabled={carouselDisabled}
+            progress={timer.progress}
+            isComplete={timer.isComplete}
+          >
+            {() => (
+              <Timer
+                totalSeconds={timer.totalSeconds}
+                onDurationChange={handleDurationChange}
+                remainingSeconds={timer.remainingSeconds}
+                isRunning={timer.isRunning}
+                progress={timer.progress}
+              />
+            )}
+          </CoffeeCarousel>
         </div>
 
         {/* Quick Add Buttons */}
@@ -190,9 +212,9 @@ function App() {
         {!fullscreen.isFullscreen && (
           <p className="text-cream/50 text-sm font-sans tracking-wide animate-fade-in-up" style={{ animationDelay: "500ms" }}>
             {timer.isComplete
-              ? "Your coffee is ready! Great focus session."
+              ? `Your ${currentCoffee.name.toLowerCase()} is ready! Great focus session.`
               : timer.isRunning
-              ? "Brewing in progress... Stay focused."
+              ? `Brewing your ${currentCoffee.name.toLowerCase()}... Stay focused.`
               : "Click the timer to set your duration"}
           </p>
         )}
