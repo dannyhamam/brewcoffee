@@ -125,12 +125,12 @@ function App() {
                            opacity-0 group-hover:opacity-100 transition-opacity duration-150
                            pointer-events-none"
               >
-                {sound.isPlaying && sound.volume > 0 ? "Mute" : "Cafe sounds"}
+                {sound.isPlaying && sound.volume > 0 ? "Mute" : "Unmute"}
               </span>
 
               {/* Volume slider — appears on hover */}
               <div
-                className="absolute top-full left-1/2 -translate-x-1/2 pt-5 py-3 px-2
+                className="absolute left-full top-1/2 -translate-y-1/2 pl-3 px-3 py-1
                            opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto
                            transition-opacity duration-200"
               >
@@ -139,16 +139,15 @@ function App() {
                   min="0"
                   max="1"
                   step="0.05"
-                  value={sound.volume}
+                  value={sound.isPlaying ? sound.volume : 0}
                   onChange={(e) => sound.setVolume(parseFloat(e.target.value))}
-                  className="h-20 w-1.5 appearance-none bg-cream/20 rounded-full cursor-pointer
+                  className="w-20 h-1.5 appearance-none bg-cream/20 rounded-full cursor-pointer
                              [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3
                              [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:rounded-full
                              [&::-webkit-slider-thumb]:bg-cream [&::-webkit-slider-thumb]:cursor-pointer
                              [&::-moz-range-thumb]:w-3 [&::-moz-range-thumb]:h-3
                              [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:bg-cream
                              [&::-moz-range-thumb]:border-none [&::-moz-range-thumb]:cursor-pointer"
-                  style={{ writingMode: "vertical-lr", direction: "rtl" }}
                   aria-label="Volume"
                 />
               </div>
